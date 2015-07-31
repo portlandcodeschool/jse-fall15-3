@@ -1,4 +1,4 @@
-### Homework #3
+<!-- ### Homework #3
 
 _Due Mon. Jan 26_
 
@@ -12,15 +12,17 @@ _Due Mon. Jan 26_
 
 - **Problem 4:** Social network! _[Moderate to Difficult, 40%]_ **Goals:** Some more real-world practice using Objects. **Notes:** Problem 3 will probably help with aspects of this.
 
----
+--- -->
 
-**1)  A Cards Toolkit!**  _[Easy, 10%]_
+<!-- **1)  A Cards Toolkit!**  _[Easy, 10%]_
 
 Revisit your playing card functions from homework 2, problem 5b.  Repackage them in a Toolkit pattern, as methods of a single master object.  You may hold that object in a global variable named anything you like (it's _cardTools_ in the template), but its name should not appear in the definitions of your methods; instead, refer to that object as `this`.  You'll need to change the form of your method definitions and the way they call other methods, but their logic and most of their code will remain the same as last week.
 
 You may adopt the enclosed [template file](cards2-template.js).  Make sure your code still passes all the assertions there!
 
 It would be best to modify your own code from Homework 2, but if you didn't solve it before, you may adopt the posted solution instead and modify it here.
+ -->
+
 
 ---
 
