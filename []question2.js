@@ -2,29 +2,40 @@
 // **2)  Testing and Simulating Arrays** _[Moderate, 20%]_
 
 // **a)**
-// Write some code to verify that Arrays behave as advertised.  Specifically, write three different functions, each testing one method of Arrays:
-
-// [R]* `testPush(array)` should verify that `array.push(val)` adds _val_ to the end of _array_ and returns its new length;
-
-// * `testPop(array)` should verify that `array.pop()` removes and returns the last element of _array_;
-
-// * `testJoin(array)` should verify that `array.join(delim)` concatenates all elements of _array_ into a single string, with string _delim_ inserted between each element.
-
+// Write some code to verify that Arrays behave as advertised.  Specifically, write three different functions, each testing one method of Arrays.
 
 // Each function should do several tests:  adding, removing, or joining values under various conditions to ensure that _array_ produces the correct outcome.  Each outcome may require multiple assertions to verify.  For each function, make sure one test is for how an empty array behaves.
 // Any assertion which fails should log a message to the console, but your test functions don't need return values.
 
 // More detailed instructions are in the [template file](array-test-template.js).
 
-
+// [R]* `testPush(array)` should verify that `array.push(val)` adds _val_ to the end of _array_ and returns its new length;
 fuction testPush (val) {
 	if (!array) array = [];
 	return array.push(val)
 }
+this is supposed to be a test, not the function
+// ??how do I create the test?
 
-// fuction testPop () {
-	
+
+// [?]* `testPop(array)` should verify that `array.pop()` removes and returns the last element of _array_;
+// function testPop (val) {
+// 	if (!array) array = [];
+// 	return array.pop(val);
 // }
+// this is supposed to be a test, not the function. The test should return an error message if the function does not remove and return the last element of array. 
+// if the array has the same last value we will know it has failed
+// var initialLastValue = array.split('');
+// testPop();
+// var modifiedLastValue = array //after array.pop()
+// if (initialLastValue === modifiedLastValue ) {
+// 	console.log('the function failed to pop last value of array')
+// };
+// ??This doesn't seem right because it relys on properly ordering the function and the variables. Also, it won't work if the value at the end of the array was removed but not returned or vice versa. 
+
+
+
+// []* `testJoin(array)` should verify that `array.join(delim)` concatenates all elements of _array_ into a single string, with string _delim_ inserted between each element.
 
 // fuction testJoin (delim) {
 	
@@ -33,12 +44,17 @@ fuction testPush (val) {
 
 
 
-// **b)** Now that you have a testing suite, implement your own version of Arrays!
+// [R] **b)** Now that you have a testing suite, implement your own version of Arrays!
 
 // Create a pseudo-array, an ordinary object which is not an actual Array but behaves
 // (somewhat) like one.  You may use a global variable _array_ to store
 // your pseudo-array.
 // It will have a property _length_, which is initially zero but needs to be adjusted as elements are added or removed.
+
+var array = {
+	length: 0,
+}
+
 // The elements of _array_ will be stored as properties named by their index numbers.
 // So for example, an _array_ representing `[5,9]` would have three properties named "length", "0", and "1" whose values are 2, 5, and 9.
 
@@ -64,3 +80,14 @@ fuction testPush (val) {
 
 
 **c)**  Test your pseudo-array implementation using your tests from part **a)**.  Your pseudo-array should be able to pass the same tests of push, pop, and join as a real Array.
+
+
+
+
+
+
+
+
+
+
+
