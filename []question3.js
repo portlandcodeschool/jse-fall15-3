@@ -2,14 +2,33 @@
 **3)  Object Comparison** _[Moderate, 30%]_
 
 **a)**
-Write a function `copy(obj)`, which duplicates an object (not just copying a reference to it).  You only need a _shallow_ copy, duplicating only the top level of properties.  That is, if `obj` contains another object _inner_, the duplicate may share a reference to _inner_ rather than copying all of _inner_ too.
+[]Write a function `copy(obj)`, which duplicates an object (not just copying a reference to it).  
+[]You only need a _shallow_ copy, duplicating only the top level of properties.  
+[]That is, if `obj` contains another object _inner_, the duplicate may share a reference to _inner_ rather than copying all of _inner_ too.
+
+var objA
+var objB
+
+function copy(obj) {
+	var objA = obj,
+	var objB = obj,
+}
+
 
 Write another function to compare two objects:
 `equal(objA,objB)` should return true only when `objA` and `objB` have exactly the same properties with the same values.  You only need _shallow_ equality: if `objA` and `objB` each have a property _inner_ referring to an object, check only that both _inner_ objects are identical (references to the same object); don't try to compare their properties.
 Note that two empty objects should be considered equal (by this function, not by the `==` operator).
 
+for (keyInObj) {
+	//if keyInObj1 matches keyInObj2 then start loop over
+}
+
+
 Write a third function:
 `similar(objA,objB)` should return true only when `objA` and `objB` have exactly the same properties, regardless of their values.
+
+
+
 
 **b)**
 We can interpret objects as _sets_ of properties, and merge those sets in various ways.  Let's define three such merges:

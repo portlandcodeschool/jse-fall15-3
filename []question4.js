@@ -33,6 +33,9 @@ Here is the data structure just after the first method call `people.meet('Matt',
 
 ![](http://portlandcodeschool.github.io/jse-win15-3/social-network2.svg)
 
+
+
+
 **b)** _[Difficult, 15%]_
 
 Write another method `people.friendsOfFriendsOf(name)` which returns a string listing, in alphabetical order, all the names of people within two degrees of separation from `name`: they've met either `name` or at least one of `name`'s friends.

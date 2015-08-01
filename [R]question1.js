@@ -26,14 +26,15 @@ var cardTools = { // a toolbox object used to group related methods
 	    return (this.suit(card) < 3)? "red": "black";
 	},
 
-	var rankNames = ['','Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten',
-                'Jack','Queen','King'];
-	var suitNames = ['','Hearts','Diamonds','Spade','Clubs'];
+	rankNames: ['','Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten',
+                'Jack','Queen','King'],
+
+	suitNames: ['','Hearts','Diamonds','Spade','Clubs'],
 
 	name: function(card) {
 		//...
 		// uses `this.rank()` and `this.suit()` to call the rank and suit methods above
-	    return this.rankNames[rank(card)]+' of '+this.suitNames[suit(card)];
+	    return this.rankNames[this.rank(card)]+' of '+this.suitNames[this.suit(card)];
 	}
 
 	// possibly other methods and properties, if needed, including...

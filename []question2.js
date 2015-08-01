@@ -9,29 +9,36 @@
 
 // More detailed instructions are in the [template file](array-test-template.js).
 
+
+
 // [R]* `testPush(array)` should verify that `array.push(val)` adds _val_ to the end of _array_ and returns its new length;
-fuction testPush (val) {
-	if (!array) array = [];
-	return array.push(val)
-}
-this is supposed to be a test, not the function
+// fuction testPush (val) {
+// 	if (!array) array = [];
+// 	return array.push(val)
+// }
+// this is supposed to be a test, not the function
 // ??how do I create the test?
 
 
+
 // [?]* `testPop(array)` should verify that `array.pop()` removes and returns the last element of _array_;
-// function testPop (val) {
-// 	if (!array) array = [];
-// 	return array.pop(val);
-// }
+function testPop (val) {
+	var initialLastValue = array[array.length-1];
+	if (!array) array = [];
+	var modifiedLastValue = array
+	return array.pop(val);
+}
 // this is supposed to be a test, not the function. The test should return an error message if the function does not remove and return the last element of array. 
 // if the array has the same last value we will know it has failed
-// var initialLastValue = array.split('');
-// testPop();
-// var modifiedLastValue = array //after array.pop()
-// if (initialLastValue === modifiedLastValue ) {
-// 	console.log('the function failed to pop last value of array')
-// };
-// ??This doesn't seem right because it relys on properly ordering the function and the variables. Also, it won't work if the value at the end of the array was removed but not returned or vice versa. 
+
+
+testPop();
+ //after array.pop()
+if (initialLastValue === modifiedLastValue ) {
+	console.log('the function failed to pop last value of array')
+};
+
+??This doesn't seem right because it relys on properly ordering the function and the variables. Also, it won't work if the value at the end of the array was removed but not returned or vice versa. 
 
 
 
@@ -51,10 +58,6 @@ this is supposed to be a test, not the function
 // your pseudo-array.
 // It will have a property _length_, which is initially zero but needs to be adjusted as elements are added or removed.
 
-var array = {
-	length: 0,
-}
-
 // The elements of _array_ will be stored as properties named by their index numbers.
 // So for example, an _array_ representing `[5,9]` would have three properties named "length", "0", and "1" whose values are 2, 5, and 9.
 
@@ -69,6 +72,12 @@ var array = {
 // _Hint:_ Within each method, use the keyword `this` to refer to your array object.
 
 
+var array = {
+	length: 0,
+	pop: 0,
+	push: 0,
+	join: 0
+}
 
 
 
@@ -78,8 +87,7 @@ var array = {
 
 
 
-
-**c)**  Test your pseudo-array implementation using your tests from part **a)**.  Your pseudo-array should be able to pass the same tests of push, pop, and join as a real Array.
+// **c)**  Test your pseudo-array implementation using your tests from part **a)**.  Your pseudo-array should be able to pass the same tests of push, pop, and join as a real Array.
 
 
 
