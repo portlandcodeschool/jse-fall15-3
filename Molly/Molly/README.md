@@ -22,6 +22,44 @@ You may adopt the enclosed [template file](cards2-template.js).  Make sure your 
 
 It would be best to modify your own code from Homework 2, but if you didn't solve it before, you may adopt the posted solution instead and modify it here.
 
+var cardTools = {
+isValid: function(num,low,high) {
+    if ((typeof num)!="number")
+        return NaN;
+    if (num%1 !== 0)
+        return NaN;
+    if (num<low || num>high)
+        return NaN;
+    return true;
+},
+	rank: function(card) {
+		return isValid(card,0,51) &&
+        Math.floor(card/4)+1;
+	},
+
+	suit: function(card) {
+		return isValid(card,0,51) &&
+        ((card%4)+1);
+	},
+
+	cardID: function(rank,suit) {
+		return isValid(rank,1,13) &&
+            isValid(suit,1,4) &&
+            ((rank-1)*4 + (suit-1));
+	},
+
+	color: function(card) {
+    return this.suit(card) && ((this.suit(card)<3)? "red": "black");
+	},
+
+	name: function(card) {
+		rankNames: ['','Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten',
+                'Jack','Queen','King'],
+		suitNames: ['','Hearts','Diamonds','Spade','Clubs'],
+		 return this.rank(card) && this.suit(card) &&(rankNames[this.rank(card)]+' of '+suitNames[this.suit(card)])
+		}
+	};
+
 ---
 
 **2)  Testing and Simulating Arrays** _[Moderate, 20%]_
@@ -31,7 +69,59 @@ Write some code to verify that Arrays behave as advertised.  Specifically, write
 
 * `testPush(array)` should verify that `array.push(val)` adds _val_ to the end of _array_ and returns its new length;
 
+function testPush(array) {
+	if (!array) array = [];
+	array.length = 0;
+	expectValue(array.push('a'), 1, "array.push('a')");
+	expectValue(array[0], 'a', "array[0]");
+	expectValue(array.length, 1, "array.length");
+	
+	expectValue(array.push('b'), 2, "array.push('b')");
+	expectValue(array[0], 'a', "array[0]");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array.length, 2, "array.length");
+	
+	expectValue(array.push('c'), 3, "array.push('c')");
+	expectValue(array[0], 'a', "array[0]"");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array[2], 'c', "array[2]");
+	expectValue(array.length, 3, "array.length");
+	
+	expectValue(array.push('d'), 4, "array.push('d')");
+	expectValue(array[0], 'a', "array[0]"");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array[2], 'c', "array[2]");
+	expectValue (array[3], 'd', "array[3]");
+	expectValue(array.length, 4, "array.length");
+	
+	expectValue(array.push('e'), 5, "array.push('e')");
+	expectValue(array[0], 'a', "array[0]"");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array[2], 'c', "array[2]");
+	expectValue (array[3], 'd', "array[3]");
+	expectValue (array[4], 'e' "array[4]")
+	expectValue(array.length, 5, "array.length");
+	}
+
 * `testPop(array)` should verify that `array.pop()` removes and returns the last element of _array_;
+
+function testPop(array) { //need to push stuff onto array first
+	if (!array) array = [];
+	array.length = 0;
+	expectValue(array.pop('a'), 0, "array.pop('a')");
+	expectValue(array[0], 'a', "array[0]");
+	expectValue(array[1], 'b', "array[1]");
+	}
+
+	// 2) pop once, then check the return value, array contents, and array length
+	//...
+
+	// 3) pop again, then check as before
+	//...
+
+	// 4) array should now be empty!  check an attempt to pop when empty
+	//...
+}
 
 * `testJoin(array)` should verify that `array.join(delim)` concatenates all elements of _array_ into a single string, with string _delim_ inserted between each element.
 
@@ -69,12 +159,51 @@ _Hint:_ Within each method, use the keyword `this` to refer to your array object
 **a)**
 Write a function `copy(obj)`, which duplicates an object (not just copying a reference to it).  You only need a _shallow_ copy, duplicating only the top level of properties.  That is, if `obj` contains another object _inner_, the duplicate may share a reference to _inner_ rather than copying all of _inner_ too.
 
+function copy(obj) {
+if (obj === null || typeof obj !== 'object') {
+return obj;
+}
+var temp = obj.constructor();
+for (var key in obj) {
+temp[key] = copy(obj[key]);
+}
+return temp;
+}
+
 Write another function to compare two objects:
 `equal(objA,objB)` should return true only when `objA` and `objB` have exactly the same properties with the same values.  You only need _shallow_ equality: if `objA` and `objB` each have a property _inner_ referring to an object, check only that both _inner_ objects are identical (references to the same object); don't try to compare their properties.
 Note that two empty objects should be considered equal (by this function, not by the `==` operator).
 
+function equal(objA, objB) {
+if (Object.keys(objA).length !== Object.keys(objB).length) {
+return false;
+}
+for (key in objA) {
+if (objA[key] !== objB[key]){
+return false;
+	}
+if(key in objB){
+return false;
+	}
+}
+return true;
+} 
+
 Write a third function:
 `similar(objA,objB)` should return true only when `objA` and `objB` have exactly the same properties, regardless of their values.
+
+function similar(objA, objB) {
+
+if (Object.keys(objA).length !== Object.keys(objB).length) {
+return false;
+}
+for (key in objA) {
+if(key in objB){
+return false;
+	}
+}
+return true;
+} 
 
 **b)**
 We can interpret objects as _sets_ of properties, and merge those sets in various ways.  Let's define three such merges:
@@ -92,7 +221,23 @@ Using those definitions, implement a function for each:
 
 * `union(objA,objB)`
 
+function union(objA, objB) {
+for (objA[key] || objB[key]) {
+if(key in objB || key in objA){
+return var newObj = (objA[key] + objB[key]);
+	}
+}
+} 
+
 * `intersect(objA,objB)`
+
+function intersect(objA, objB) {
+for (objA[key] && objB[key]) {
+if(key in objB && key in objA){
+return var newObj = (objA[key] + objB[key]);
+	}
+	}
+}
 
 * `subtract(objA,objB)`
 
@@ -113,6 +258,12 @@ Write three methods for `people`:
 If either person isn't yet represented in `people`, add them.
 Then increment a count of the meetings between them.
 Assume that the order of arguments doesn't matter (i.e. `meet(A,B)` is the same as `meet(B,A)`), and that meeting oneself _(A==B)_ has no effect.
+
+function people.meet(nameA, nameB) {
+var people = '';
+
+people += nameA += nameB;
+}
 
 * `people.haveMet(nameA,nameB)` should return a number greater than 0 if those people have met, and some falseish value if they haven't or don't exist.
 
