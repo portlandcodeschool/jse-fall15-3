@@ -72,28 +72,33 @@ Write some code to verify that Arrays behave as advertised.  Specifically, write
 function testPush(array) {
 	if (!array) array = [];
 	array.length = 0;
+  //1)
 	expectValue(array.push('a'), 1, "array.push('a')");
 	expectValue(array[0], 'a', "array[0]");
 	expectValue(array.length, 1, "array.length");
-	
+
+//2)
 	expectValue(array.push('b'), 2, "array.push('b')");
 	expectValue(array[0], 'a', "array[0]");
 	expectValue(array[1], 'b', "array[1]");
 	expectValue(array.length, 2, "array.length");
-	
+
+//3)
 	expectValue(array.push('c'), 3, "array.push('c')");
 	expectValue(array[0], 'a', "array[0]"");
 	expectValue(array[1], 'b', "array[1]");
 	expectValue(array[2], 'c', "array[2]");
 	expectValue(array.length, 3, "array.length");
-	
+
+//4)
 	expectValue(array.push('d'), 4, "array.push('d')");
 	expectValue(array[0], 'a', "array[0]"");
 	expectValue(array[1], 'b', "array[1]");
 	expectValue(array[2], 'c', "array[2]");
 	expectValue (array[3], 'd', "array[3]");
 	expectValue(array.length, 4, "array.length");
-	
+
+//5)
 	expectValue(array.push('e'), 5, "array.push('e')");
 	expectValue(array[0], 'a', "array[0]"");
 	expectValue(array[1], 'b', "array[1]");
@@ -105,25 +110,57 @@ function testPush(array) {
 
 * `testPop(array)` should verify that `array.pop()` removes and returns the last element of _array_;
 
-function testPop(array) { //need to push stuff onto array first
+function testPop(array) {
 	if (!array) array = [];
-	array.length = 0;
-	expectValue(array.pop('a'), 0, "array.pop('a')");
-	expectValue(array[0], 'a', "array[0]");
-	expectValue(array[1], 'b', "array[1]");
-	}
 
-	// 2) pop once, then check the return value, array contents, and array length
-	//...
+	array.length = 0; //clear array
 
-	// 3) pop again, then check as before
-	//...
+	// 1)
+  expectValue(array.push('a', 'b'), 2, "array.push('a','b')");
 
-	// 4) array should now be empty!  check an attempt to pop when empty
-	//...
+	// 2)
+expectValue(array.pop(), 'b', "array.pop()");
+expectValue(array.length, 1, "array.length");
+expectValue(array[0], 'a' "array[0]");
+
+	// 3)
+  expectValue(array.pop(), 'a', "array.pop()");
+  expectValue(array.length, 0, "array.length");
+  expectValue(array[0], undefined, "array[0]");
+
+	// 4)
+  expectValue(array.pop(), undefined, "array.pop()");
 }
 
 * `testJoin(array)` should verify that `array.join(delim)` concatenates all elements of _array_ into a single string, with string _delim_ inserted between each element.
+
+function testJoin(array) {
+	if (!array) array = [];
+
+	array.length = 0; //clear array
+
+	// 1)
+  expectValue(array.join(), '', "array.join()");
+
+	// 2)
+  expectValue(array.push('a'), 1, "array.push('a')");
+  expectValue(array.join(), 'a', "array.join()");
+
+//3)
+expectValue(array.push('b'), 2, "array.push('b')");
+expectValue(array.join(), 'a, b', "array.join()");
+
+//4)
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(), 'a, b, c', "array.join()");
+
+//5)
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(|), 'a, b, c', "array.join(|)");
+
+//6)
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(), 'a, b, c', "array.join()");
 
 
 Each function should do several tests:  adding, removing, or joining values under various conditions to ensure that _array_ produces the correct outcome.  Each outcome may require multiple assertions to verify.  For each function, make sure one test is for how an empty array behaves.
@@ -187,7 +224,7 @@ return false;
 	}
 }
 return true;
-} 
+}
 
 Write a third function:
 `similar(objA,objB)` should return true only when `objA` and `objB` have exactly the same properties, regardless of their values.
@@ -203,7 +240,7 @@ return false;
 	}
 }
 return true;
-} 
+}
 
 **b)**
 We can interpret objects as _sets_ of properties, and merge those sets in various ways.  Let's define three such merges:
@@ -219,27 +256,55 @@ For example, `{a:1,b:0}` minus `{a:0,c:0}` is `{b:0}`, and the reverse subtracti
 
 Using those definitions, implement a function for each:
 
-* `union(objA,objB)`
+* `union(objA,objB)` //returns 'illeagal return statement'
 
 function union(objA, objB) {
-for (objA[key] || objB[key]) {
-if(key in objB || key in objA){
-return var newObj = (objA[key] + objB[key]);
+var newObj = {};
+for (key in objA) {
+  newObj[key] = objA[key];
+}
+for(key in objB){
+if (!key in objA) {
+  newObj[key] = objB[key];
+}
 	}
 }
-} 
+return newObj
+}
 
-* `intersect(objA,objB)`
+* `intersect(objA,objB)` //returns "a"
 
 function intersect(objA, objB) {
-for (objA[key] && objB[key]) {
-if(key in objB && key in objA){
-return var newObj = (objA[key] + objB[key]);
+	var newObj = {};
+	for(var key in objA) {
+	if (key in objB) {
+		newObj = key;
+}
 	}
-	}
+	return newObj;
 }
 
 * `subtract(objA,objB)`
+
+function subtract(objA, objB) {
+	var newObj = {};
+	for(var key in objA) {
+	if (!key in objB) {
+		newObj = key;
+}
+	}
+	return newObj;
+}
+
+function subtract(objB, objA) {
+	var newObj = {};
+	for(var key in objB) {
+	if (!key in objA) {
+		newObj = key;
+}
+	}
+	return newObj;
+}
 
 Each function should return a new object, or _undefined_ if either of their arguments is not an object.
 
@@ -259,11 +324,7 @@ If either person isn't yet represented in `people`, add them.
 Then increment a count of the meetings between them.
 Assume that the order of arguments doesn't matter (i.e. `meet(A,B)` is the same as `meet(B,A)`), and that meeting oneself _(A==B)_ has no effect.
 
-function people.meet(nameA, nameB) {
-var people = '';
 
-people += nameA += nameB;
-}
 
 * `people.haveMet(nameA,nameB)` should return a number greater than 0 if those people have met, and some falseish value if they haven't or don't exist.
 
@@ -291,5 +352,3 @@ Write another method `people.friendsOfFriendsOf(name)` which returns a string li
 Your list may include `name` itself but no duplicates: any person should be listed only once regardless of the number of connections with `name`.
 
 (_Hint:_ the union of sets includes no duplicates!  Perhaps you could recycle code from somewhere?)
-
-
