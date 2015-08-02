@@ -40,15 +40,23 @@ function testPop(array) {
 
 	// 1) populate the array by pushing elements 'a' and 'b' onto it
 	//...
+  expectValue(array.push('a', 'b'), 2, "array.push('a','b')");
 
 	// 2) pop once, then check the return value, array contents, and array length
 	//...
-
+expectValue(array.pop(), 'b', "array.pop()");
+expectValue(array.length, 1, "array.length");
+expectValue(array[0], 'a' "array[0]");
 	// 3) pop again, then check as before
 	//...
+  expectValue(array.pop(), 'a', "array.pop()");
+  expectValue(array.length, 0, "array.length");
+  expectValue(array[0], undefined, "array[0]");
+
 
 	// 4) array should now be empty!  check an attempt to pop when empty
 	//...
+  expectValue(array.pop(), undefined, "array.pop()");
 }
 
 function testJoin(array) {
@@ -59,22 +67,32 @@ function testJoin(array) {
 	// 1) try a join on the empty array,
 	//  then check the return value and its status (which should be unchanged)
 	//...
+  expectValue(array.join(), '', "array.join()");
 
 	// 2) push 'a', then join and check as before
 	//...
+  expectValue(array.push('a'), 1, "array.push('a')");
+  expectValue(array.join(), 'a', "array.join()");
 
 	// 3) push 'b', then join and check as before
 	//...
-
+expectValue(array.push('b'), 2, "array.push('b')");
+expectValue(array.join(), 'a, b', "array.join()");
 	// 4) push 'c', then join and check as before
 	//...
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(), 'a, b, c', "array.join()");
 
 	// 5) leave array unchanged, but join it with a different delimiter and check outcome
 	//...
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(|), 'a, b, c', "array.join(|)");
+
 
 	// 6) leave array unchanged, but join() it with no delimiter argument, and check that it
 	//   uses the default delimiter ',' correctly
-}
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(), 'a, b, c', "array.join()");
 
 // When those test functions are written, you can run them on built-in arrays
 //  by calling the test with no arguments:
