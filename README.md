@@ -28,9 +28,9 @@ It would be best to modify your own code from Homework 2, but if you didn't solv
 
 **2)  Testing and Simulating Arrays** _[Moderate, 20%]_
 
-[?]When I run the file it says "unexpected token" the line after the end of the file
+[X]When I run the file it says "unexpected token" the line after the end of the file
 
-**a)**
+[X]**a)**
 Write some code to verify that Arrays behave as advertised.  Specifically, write three different functions, each testing one method of Arrays:
 
 * `testPush(array)` should verify that `array.push(val)` adds _val_ to the end of _array_ and returns its new length;
@@ -45,13 +45,13 @@ Any assertion which fails should log a message to the console, but your test fun
 
 More detailed instructions are in the [template file](array-test-template.js).
 
-**b)** Now that you have a testing suite, implement your own version of Arrays!
+[]**b)** Now that you have a testing suite, implement your own version of Arrays!
 
 [X] Create a pseudo-array, an ordinary object which is not an actual Array but behaves
 (somewhat) like one.  [X]You may use a global variable _array_ to store
 your pseudo-array.
-It will have a property _length_, which is initially zero but needs to be adjusted as elements are added or removed.
-The elements of _array_ will be stored as properties named by their index numbers.
+[?]It will have a property _length_, which is initially zero but needs to be adjusted as elements are added or removed.
+[]The elements of _array_ will be stored as properties named by their index numbers.
 [?]So for example, an _array_ representing `[5,9]` would have three properties named "length", "0", and "1" whose values are 2, 5, and 9.
 
 For this exercise, you don't need to delete any _array_ elements beyond its length if the length shrinks; just ignore them.  Setting _array.length_ to 0 is enough to reset it to "empty".
