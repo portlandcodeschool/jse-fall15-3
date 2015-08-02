@@ -4,26 +4,79 @@ var cardTools = { // a toolbox object used to group related methods
 
 	// These functions are no longer global variables but instead
 	// properties (methods) of the toolbox object:
-	rank: function(id) {
+	rank: function(card) {
 		//...
+		if (card >= 52) {
+			return NaN
+		} else if (typeof card === "string"){
+			return NaN
+		} else if (card < 0){
+			return NaN
+		} else if (!Number.isInteger(card)){
+			return NaN
+		}
+		return Math.floor(card/4)+1;
 	},
 
-	suit: function(id) {
+	suit: function(card) {
 		//...
+		if (card >= 52) {
+			return NaN
+		} else if (typeof card === "string"){
+			return NaN
+		} else if (card < 0){
+			return NaN
+		} else if (!Number.isInteger(card)){
+			return NaN
+		}
+		return (card%4)+1;
 	},
 
 	cardID: function(rank,suit) {
 		//...
+		if (rank <= 0) {
+			return NaN
+		} else if (typeof rank === "string") {
+			return NaN
+		} else if (suit >= 5) {
+			return NaN
+		} else if (rank > 13) {
+			return NaN
+		} else if (!Number.isInteger(rank)) {
+			return NaN
+		}
+		return (rank-1)*4 + (suit-1);
 	},
 
-	color: function(id) {
+	color: function(card) {
 		//...
 		// uses `this.suit()` to call the suit method above
+		if (typeof card === "string") {
+			return NaN
+		} else if (typeof card === "boolean") {
+			return NaN
+		}
+		return (this.suit(card) < 3)? "red":"black";
 	},
 
-	name: function(id) {
+	rankNames: ['','Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten',
+                'Jack','Queen','King'],
+
+	suitNames: ['','Hearts','Diamonds','Spade','Clubs'],
+
+	name: function(card) {
 		//...
 		// uses `this.rank()` and `this.suit()` to call the rank and suit methods above
+		if (typeof card === "boolean") {
+			return NaN
+		} else if (card <= 0) {
+			return NaN
+		} else if (card >= 52) {
+			return NaN
+		} else if (isNaN(card)) {
+			return NaN
+		}
+		return this.rankNames[this.rank(card)]+' of '+this.suitNames[this.suit(card)];
 	}
 
 	// possibly other methods and properties, if needed, including...
@@ -140,3 +193,5 @@ assert 		(Number.isNaN(cardTools.name(52)),      "Test 45 failed");
 expectNaN	(cardTools.name(52), "name(52)");
 assert 		(Number.isNaN(cardTools.name(NaN)),     "Test 46 failed");
 expectNaN	(cardTools.name(NaN), "name(NaN)");
+
+console.log("*****")

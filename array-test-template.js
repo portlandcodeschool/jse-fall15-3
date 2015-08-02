@@ -1,3 +1,5 @@
+var array = [];
+
 // Here's the old, simple assertion:
 function assert(claim,message) {
     if (!claim) console.error(message);
@@ -43,12 +45,18 @@ function testPop(array) {
 
 	// 2) pop once, then check the return value, array contents, and array length
 	//...
+	function testPop (val) {
+	var initialLastValue = array[array.length-1];
+	if (!array) array = [];
+	var modifiedLastValue = array
+	return array.pop(val);
 
 	// 3) pop again, then check as before
 	//...
 
 	// 4) array should now be empty!  check an attempt to pop when empty
 	//...
+	}
 }
 
 function testJoin(array) {
