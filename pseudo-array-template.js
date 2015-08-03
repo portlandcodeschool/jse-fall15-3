@@ -30,16 +30,3 @@ var test = ['one','two','three','four','five'];
 // myArray.push(test, 'six');
 // myArray.join(test, '***');
 
-
-
-
-
-
-
-
-
-
-
-
-
-

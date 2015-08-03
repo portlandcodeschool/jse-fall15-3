@@ -104,9 +104,9 @@ function testJoin(array) {
 
 // When those test functions are written, you can run them on built-in arrays
 //  by calling the test with no arguments:
-testPush();
-testPop();
-testJoin();
+// testPush();
+// testPop();
+// testJoin();
 
 
 // To test a custom array implementation (see problem 2), do this:
