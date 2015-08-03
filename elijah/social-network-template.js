@@ -38,6 +38,21 @@ people.friendsOf = function(name) {
     }
 }
 
+// 4d
+people.friendsOfFriendsOf = function(name) {
+    // return string containing all friends within two degrees of seperation
+    var friends = [];
+    for (var n in this.index[name].friends) {
+        if (friends.indexOf(n) === -1) friends.push(n);
+        for (var p in people.index) {
+            if (n in people.index[p].friends && p !== name && friends.indexOf(p) === -1) {
+                friends.push(p);
+            }
+        }
+    }
+    return friends.sort().join(' ');
+}
+
 // callback
 var peopleCheck = function(name) {
     // if name isnt in the index, add it

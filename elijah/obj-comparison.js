@@ -53,7 +53,7 @@ var union = function(objA, objB) {
     // return new obj with props found in either obj
     var newObj = {}
     if (isObject(objA) && isObject(objB)) {
-        if ((Object.keys(objA).length > (Object.keys(objB)) {
+        if ((Object.keys(objA).length > (Object.keys(objB).length) {
             for (var prop in objA) {
                 // XXX ugh, headache... come back to this
             }
