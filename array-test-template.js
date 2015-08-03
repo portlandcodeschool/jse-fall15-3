@@ -108,11 +108,10 @@ testPush();
 testPop();
 testJoin();
 
-/*
+
 // To test a custom array implementation (see problem 2), do this:
 var myArray = {...something...}; //special object with push,pop, and join methods
 
 testPush(myArray);
 testPop(myArray);
 testJoin(myArray);
-*/
