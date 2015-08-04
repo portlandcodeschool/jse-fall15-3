@@ -31,6 +31,11 @@ function testPush(array) { // accept an array to test, if provided
 
 	// That might be enough, but to be sure, push 'c' and test again here:
 	//...
+	expectValue(array.push('c'), 3, "array.push('c')");
+	expectValue(array[0], 'a', "array[0]");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array[2], 'c', "array[2}");
+	expectValue(array.length, 3, "array.length");
 }
 
 function testPop(array) {
@@ -40,15 +45,21 @@ function testPop(array) {
 
 	// 1) populate the array by pushing elements 'a' and 'b' onto it
 	//...
+	array.push('a','b');
 
 	// 2) pop once, then check the return value, array contents, and array length
 	//...
-
+	expectValue(array.pop('b'), 'b', "array.pop('b')");
+	expectValue(array[0], 'a', "array[0]");
+	expectValue(array.length, 1, 'array.length');
 	// 3) pop again, then check as before
 	//...
-
+	expectValue(array.pop('a'), 'a', "array.pop('a')");
+	expectValue(array[0], undefined, 'array[0]');
+	expectValue(array.length, 0, 'array.length');
 	// 4) array should now be empty!  check an attempt to pop when empty
 	//...
+	expectValue(array.pop(), undefined, 'array.pop(undefined)');
 }
 
 function testJoin(array) {
@@ -59,21 +70,31 @@ function testJoin(array) {
 	// 1) try a join on the empty array,
 	//  then check the return value and its status (which should be unchanged)
 	//...
-
+	expectValue(array.join(), "", "array.join()");
+	expectValue(array.length, 0, "array.length");
 	// 2) push 'a', then join and check as before
 	//...
-
+	array.push('a');
+	expectValue(array.join(), 'a', "array.join()");
+	expectValue(array.length, 1, "array.length");
 	// 3) push 'b', then join and check as before
 	//...
-
+	array.push('b');
+	expectValue(array.join(), 'a,b', "array.join()");
+	expectValue(array.length, 2, "array.length");
 	// 4) push 'c', then join and check as before
 	//...
-
-	// 5) leave array unchanged, but join it with a different delimiter and check outcome
+	array.push('c');
+	expectValue(array.join(), 'a,b,c', 'array.join()');
+	expectValue(array.length, 3, "array.length");
+		// 5) leave array unchanged, but join it with a different delimiter and check outcome
 	//...
+	expectValue(array.join(' + '), 'a + b + c', 'array.join(' + ')');
+	expectValue(array.length, 3, "array.length");
 
 	// 6) leave array unchanged, but join() it with no delimiter argument, and check that it
 	//   uses the default delimiter ',' correctly
+	//------->I already checked it above! ^^^
 }
 
 // When those test functions are written, you can run them on built-in arrays
