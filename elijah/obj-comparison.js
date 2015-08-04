@@ -53,9 +53,12 @@ var union = function(objA, objB) {
     // return new obj with props found in either obj
     var newObj = {}
     if (isObject(objA) && isObject(objB)) {
-        if ((Object.keys(objA).length > (Object.keys(objB).length) {
-            for (var prop in objA) {
-                // XXX ugh, headache... come back to this
+        for (var prop in objA) {
+            newObj[prop] = objA[prop];
+        }
+        for (var prop in objB) {
+            if (!(prop in objA)) {
+                newObj[prop] = objA[prop] || objB[prop];
             }
         }
     } else {
@@ -93,73 +96,3 @@ var subtract = function(objA, objB) {
     }
     return newObj;
 }
-// end 3b
-
-// some objects for testing
-
-var a = {
-    a: 'a',
-    b: 'b',
-    c: 'c'
-}
-
-var b = {
-    a: 1,
-    b: 2,
-    c: 3
-}
-
-var c = {
-    a: 'a',
-    b: 'b',
-    c: 'c'
-}
-
-var d = {
-    dog: true,
-    cat: false,
-    chicken: "evil",
-    flounder: "flat"
-}
-
-var e = {
-    a: a,
-    b: b,
-    c: c,
-    d: d
-}
-
-var f = {
-    a: 'a',
-    b: 'b',
-    c: 'c',
-    d: 'd'
-}
-
-//3a test calls
-//console.log(copy(a));
-//// i think this is correct
-//console.log(copy(e));
-//console.log(e);
-//console.log(copy(d));
-//console.log(d);
-//console.log(equal(a,f)); //false
-//console.log(equal(a,c)); //true
-//console.log(equal(a,b)); //false
-//console.log(equal(c,d)); //false
-//console.log(similer(a,b)); //true
-//console.log(similer(a,d)); //false
-//console.log(similer(a,c)); //true
-//console.log(similer(a,e)); //false
-//3b test calls
-//console.log(isObject(a)); //true
-//console.log(isObject(similer)); //false
-
-//console.log(intersect(a,b)); // shares 3 keys
-//console.log(intersect(a,e)); // shares 3 keys
-//console.log(intersect(a,d)); //empty obj
-
-//console.log(subtract(a,b)); //empty obj
-//console.log(subtract(a,d)); // 3 prop obj
-//console.log(subtract(d,a)); // 4 prop obj
-//console.log(subtract(intersect,a)); // undefined
