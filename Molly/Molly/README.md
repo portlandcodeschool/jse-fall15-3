@@ -185,7 +185,34 @@ corresponding methods of real Arrays.  When your _pop_ and _push_ methods modify
 
 You may use the enclosed [template file](pseudo-array-template.js) to get started.
 
+var array = {
+	length:0,
+	pop: function() {
+   var lastKey = this[this.length-1];
+   delete this[this.length-1];
+   this.length -= 1;
+   return lastKey;
+	},
+
+	push: function(value) { this[this.length] = value;
+    this.length += 1;
+    return this.length;
+	},
+
+	join: function(value) {var str = '';
+		if (this.length > 0) {
+			for (i=0; i < (this.length-1); i++) {
+      	str += this[i] + delimiter;
+    	}
+    	str += this[this.length-1];
+    	return str;
+		} else {
+			return str;
+		}
+  }
+	
 _Hint:_ Within each method, use the keyword `this` to refer to your array object.
+
 
 **c)**  Test your pseudo-array implementation using your tests from part **a)**.  Your pseudo-array should be able to pass the same tests of push, pop, and join as a real Array.
 
@@ -235,7 +262,7 @@ if (Object.keys(objA).length !== Object.keys(objB).length) {
 return false;
 }
 for (key in objA) {
-if(key in objB){
+if(!(key in objB)){
 return false;
 	}
 }
@@ -256,32 +283,32 @@ For example, `{a:1,b:0}` minus `{a:0,c:0}` is `{b:0}`, and the reverse subtracti
 
 Using those definitions, implement a function for each:
 
-* `union(objA,objB)` //returns 'illeagal return statement'
+* `union(objA,objB)`
 
 function union(objA, objB) {
 var newObj = {};
 for (key in objA) {
   newObj[key] = objA[key];
-}
+    }
 for(key in objB){
-if (!key in objA) {
-  newObj[key] = objB[key];
-}
+if (!(key in objA)) {
+  newObj[key] = objA[key] || objB[key];
+    }
 	}
-}
-return newObj
+  return newObj;
 }
 
-* `intersect(objA,objB)` //returns "a"
+
+* `intersect(objA,objB)`
 
 function intersect(objA, objB) {
 	var newObj = {};
 	for(var key in objA) {
 	if (key in objB) {
-		newObj = key;
+		newObj[key] = objA[key] && objB[key];
 }
 	}
-	return newObj;
+  return newObj
 }
 
 * `subtract(objA,objB)`
@@ -289,22 +316,13 @@ function intersect(objA, objB) {
 function subtract(objA, objB) {
 	var newObj = {};
 	for(var key in objA) {
-	if (!key in objB) {
-		newObj = key;
+	if (!(key in objB)) {
+		newObj[key] = objA[key]
 }
 	}
 	return newObj;
 }
 
-function subtract(objB, objA) {
-	var newObj = {};
-	for(var key in objB) {
-	if (!key in objA) {
-		newObj = key;
-}
-	}
-	return newObj;
-}
 
 Each function should return a new object, or _undefined_ if either of their arguments is not an object.
 
@@ -324,11 +342,41 @@ If either person isn't yet represented in `people`, add them.
 Then increment a count of the meetings between them.
 Assume that the order of arguments doesn't matter (i.e. `meet(A,B)` is the same as `meet(B,A)`), and that meeting oneself _(A==B)_ has no effect.
 
+function people.meet(nameA, nameB) {
+if (!(nameA in people.index)){
+people.index[nameA] = {name:nameA, friends:{}};
+}
+if (!(nameB in people.index)) {
+  people.index[nameB] = {name:nameB, friends:{}};
+}
+var objectA = people.index[nameA];
+var objectB = people.index[nameB];
 
+var meeting = objectA.friends[nameB]
+if (meeting === undefined){
+  meeting = 0;
+}
+meeting++
+objectA.friends[nameB] = meeting;
+objectB.friends[nameA] = meeting;
+
+return meeting;
+}
 
 * `people.haveMet(nameA,nameB)` should return a number greater than 0 if those people have met, and some falseish value if they haven't or don't exist.
 
+people.haveMet = function(nameA, nameB) {
+  var meeting = people.index[nameA].friends[nameB];
+    return meeting;
+}
+
 * `people.friendsOf(name)` should return a string listing the names of all people whom `name` has met at least once (or undefined if `name` doesn't exist).   List the names in alphabetical order, and make sure each name appears only once.
+
+people.friendsOf = function(name) {
+  var friends = Object.keys(people.index[name].friends);
+friends = friends.sort().join(', ');
+return friends;  
+}
 
 You may use the enclosed [template file](social-network-template.js) to get started.
 
@@ -350,5 +398,29 @@ Here is the data structure just after the first method call `people.meet('Matt',
 
 Write another method `people.friendsOfFriendsOf(name)` which returns a string listing, in alphabetical order, all the names of people within two degrees of separation from `name`: they've met either `name` or at least one of `name`'s friends.
 Your list may include `name` itself but no duplicates: any person should be listed only once regardless of the number of connections with `name`.
+
+function union(objA, objB) {
+var newObj = {};
+for (key in objA) {
+  newObj[key] = objA[key];
+    }
+for(key in objB){
+if (!(key in objA)) {
+  newObj[key] = objA[key] || objB[key];
+    }
+	}
+  return newObj;
+}
+
+people.friendsOfFriendsOf = function(name) {
+  var friends1 = Object.keys(people.index[name].friends).sort;
+  var soFar = people.index[name].friends;
+  for (i = 0; i<friends1.length; i++) {
+    var friends2 = people.index[friends1[i]].friends;
+    var soFar = union(soFar, friends2);
+  }
+  return Object.keys(soFar).sort().join(', ');
+}
+
 
 (_Hint:_ the union of sets includes no duplicates!  Perhaps you could recycle code from somewhere?)
