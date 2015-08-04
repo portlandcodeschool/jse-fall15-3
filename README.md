@@ -68,6 +68,7 @@ You may use the enclosed [template file](pseudo-array-template.js) to get starte
 
 _Hint:_ Within each method, use the keyword `this` to refer to your array object.
 
+[??]if this.pop will increment length, how will it also reference to object that calls it?
 
 **c)**  Test your pseudo-array implementation using your tests from part **a)**.  Your pseudo-array should be able to pass the same tests of push, pop, and join as a real Array.
 

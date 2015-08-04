@@ -30,3 +30,7 @@ var test = ['one','two','three','four','five'];
 // myArray.push(test, 'six');
 // myArray.join(test, '***');
 
+// use this to indicate the object that calls the function 
+// this.length += 1; will add to length and this.lenght -= 1; will take away
+// remember to consider the state of the object before the operation 
+// no need to put parameter in pop function
