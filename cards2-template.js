@@ -4,27 +4,53 @@ var cardTools = { // a toolbox object used to group related methods
 
 	// These functions are no longer global variables but instead
 	// properties (methods) of the toolbox object:
-	rank: function(id) {
-		//...
+	rank: function(card) {
+				return this.isValid(card,0,51) &&
+        Math.floor(card/4)+1;
 	},
 
-	suit: function(id) {
+	suit: function(card) {
+				return this.isValid(card,0,51) &&
+        ((card%4)+1);
 		//...
 	},
 
 	cardID: function(rank,suit) {
+					return this.isValid(rank,1,13) &&
+            this.isValid(suit,1,4) &&
+            ((rank-1)*4 + (suit-1));
 		//...
 	},
 
-	color: function(id) {
+	color: function(card) {
+					var theSuit=this.suit(card); //may be NaN
+			    return theSuit && ((theSuit<3)? "red": "black");
 		//...
 		// uses `this.suit()` to call the suit method above
 	},
 
-	name: function(id) {
+	name: function(card) {
+				var theRank = this.rank(card);
+		    var theSuit = this.suit(card);
+		    return theRank && theSuit &&
+		        (this.rankNames[theRank]+' of '+this.suitNames[theSuit]);
 		//...
 		// uses `this.rank()` and `this.suit()` to call the rank and suit methods above
-	}
+	},
+
+	isValid: function(num,low,high) { // Returns--> NaN, true
+    if ((typeof num)!="number") //wrong type
+        return NaN;
+    if (num%1 !== 0) //non-integer
+        return NaN;
+    if (num<low || num>high) //out of range
+        return NaN;
+    return true;
+	},
+
+	rankNames : ['','Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','Queen','King'],
+
+	suitNames : ['','Hearts','Diamonds','Spade','Clubs'],
 
 	// possibly other methods and properties, if needed, including...
 	// a validation function?
