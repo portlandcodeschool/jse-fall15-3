@@ -22,6 +22,44 @@ You may adopt the enclosed [template file](cards2-template.js).  Make sure your 
 
 It would be best to modify your own code from Homework 2, but if you didn't solve it before, you may adopt the posted solution instead and modify it here.
 
+var cardTools = {
+isValid: function(num,low,high) {
+    if ((typeof num)!="number")
+        return NaN;
+    if (num%1 !== 0)
+        return NaN;
+    if (num<low || num>high)
+        return NaN;
+    return true;
+},
+	rank: function(card) {
+		return isValid(card,0,51) &&
+        Math.floor(card/4)+1;
+	},
+
+	suit: function(card) {
+		return isValid(card,0,51) &&
+        ((card%4)+1);
+	},
+
+	cardID: function(rank,suit) {
+		return isValid(rank,1,13) &&
+            isValid(suit,1,4) &&
+            ((rank-1)*4 + (suit-1));
+	},
+
+	color: function(card) {
+    return this.suit(card) && ((this.suit(card)<3)? "red": "black");
+	},
+
+	name: function(card) {
+		rankNames: ['','Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten',
+                'Jack','Queen','King'],
+		suitNames: ['','Hearts','Diamonds','Spade','Clubs'],
+		 return this.rank(card) && this.suit(card) &&(rankNames[this.rank(card)]+' of '+suitNames[this.suit(card)])
+		}
+	};
+
 ---
 
 **2)  Testing and Simulating Arrays** _[Moderate, 20%]_
@@ -31,9 +69,98 @@ Write some code to verify that Arrays behave as advertised.  Specifically, write
 
 * `testPush(array)` should verify that `array.push(val)` adds _val_ to the end of _array_ and returns its new length;
 
+function testPush(array) {
+	if (!array) array = [];
+	array.length = 0;
+  //1)
+	expectValue(array.push('a'), 1, "array.push('a')");
+	expectValue(array[0], 'a', "array[0]");
+	expectValue(array.length, 1, "array.length");
+
+//2)
+	expectValue(array.push('b'), 2, "array.push('b')");
+	expectValue(array[0], 'a', "array[0]");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array.length, 2, "array.length");
+
+//3)
+	expectValue(array.push('c'), 3, "array.push('c')");
+	expectValue(array[0], 'a', "array[0]"");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array[2], 'c', "array[2]");
+	expectValue(array.length, 3, "array.length");
+
+//4)
+	expectValue(array.push('d'), 4, "array.push('d')");
+	expectValue(array[0], 'a', "array[0]"");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array[2], 'c', "array[2]");
+	expectValue (array[3], 'd', "array[3]");
+	expectValue(array.length, 4, "array.length");
+
+//5)
+	expectValue(array.push('e'), 5, "array.push('e')");
+	expectValue(array[0], 'a', "array[0]"");
+	expectValue(array[1], 'b', "array[1]");
+	expectValue(array[2], 'c', "array[2]");
+	expectValue (array[3], 'd', "array[3]");
+	expectValue (array[4], 'e' "array[4]")
+	expectValue(array.length, 5, "array.length");
+	}
+
 * `testPop(array)` should verify that `array.pop()` removes and returns the last element of _array_;
 
+function testPop(array) {
+	if (!array) array = [];
+
+	array.length = 0; //clear array
+
+	// 1)
+  expectValue(array.push('a', 'b'), 2, "array.push('a','b')");
+
+	// 2)
+expectValue(array.pop(), 'b', "array.pop()");
+expectValue(array.length, 1, "array.length");
+expectValue(array[0], 'a' "array[0]");
+
+	// 3)
+  expectValue(array.pop(), 'a', "array.pop()");
+  expectValue(array.length, 0, "array.length");
+  expectValue(array[0], undefined, "array[0]");
+
+	// 4)
+  expectValue(array.pop(), undefined, "array.pop()");
+}
+
 * `testJoin(array)` should verify that `array.join(delim)` concatenates all elements of _array_ into a single string, with string _delim_ inserted between each element.
+
+function testJoin(array) {
+	if (!array) array = [];
+
+	array.length = 0; //clear array
+
+	// 1)
+  expectValue(array.join(), '', "array.join()");
+
+	// 2)
+  expectValue(array.push('a'), 1, "array.push('a')");
+  expectValue(array.join(), 'a', "array.join()");
+
+//3)
+expectValue(array.push('b'), 2, "array.push('b')");
+expectValue(array.join(), 'a, b', "array.join()");
+
+//4)
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(), 'a, b, c', "array.join()");
+
+//5)
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(|), 'a, b, c', "array.join(|)");
+
+//6)
+  expectValue(array.push('c'), 3, "array.push('c')");
+  expectValue(array.join(), 'a, b, c', "array.join()");
 
 
 Each function should do several tests:  adding, removing, or joining values under various conditions to ensure that _array_ produces the correct outcome.  Each outcome may require multiple assertions to verify.  For each function, make sure one test is for how an empty array behaves.
@@ -58,7 +185,34 @@ corresponding methods of real Arrays.  When your _pop_ and _push_ methods modify
 
 You may use the enclosed [template file](pseudo-array-template.js) to get started.
 
+var array = {
+	length:0,
+	pop: function() {
+   var lastKey = this[this.length-1];
+   delete this[this.length-1];
+   this.length -= 1;
+   return lastKey;
+	},
+
+	push: function(value) { this[this.length] = value;
+    this.length += 1;
+    return this.length;
+	},
+
+	join: function(value) {var str = '';
+		if (this.length > 0) {
+			for (i=0; i < (this.length-1); i++) {
+      	str += this[i] + delimiter;
+    	}
+    	str += this[this.length-1];
+    	return str;
+		} else {
+			return str;
+		}
+  }
+	
 _Hint:_ Within each method, use the keyword `this` to refer to your array object.
+
 
 **c)**  Test your pseudo-array implementation using your tests from part **a)**.  Your pseudo-array should be able to pass the same tests of push, pop, and join as a real Array.
 
@@ -69,12 +223,51 @@ _Hint:_ Within each method, use the keyword `this` to refer to your array object
 **a)**
 Write a function `copy(obj)`, which duplicates an object (not just copying a reference to it).  You only need a _shallow_ copy, duplicating only the top level of properties.  That is, if `obj` contains another object _inner_, the duplicate may share a reference to _inner_ rather than copying all of _inner_ too.
 
+function copy(obj) {
+if (obj === null || typeof obj !== 'object') {
+return obj;
+}
+var temp = obj.constructor();
+for (var key in obj) {
+temp[key] = copy(obj[key]);
+}
+return temp;
+}
+
 Write another function to compare two objects:
 `equal(objA,objB)` should return true only when `objA` and `objB` have exactly the same properties with the same values.  You only need _shallow_ equality: if `objA` and `objB` each have a property _inner_ referring to an object, check only that both _inner_ objects are identical (references to the same object); don't try to compare their properties.
 Note that two empty objects should be considered equal (by this function, not by the `==` operator).
 
+function equal(objA, objB) {
+if (Object.keys(objA).length !== Object.keys(objB).length) {
+return false;
+}
+for (key in objA) {
+if (objA[key] !== objB[key]){
+return false;
+	}
+if(key in objB){
+return false;
+	}
+}
+return true;
+}
+
 Write a third function:
 `similar(objA,objB)` should return true only when `objA` and `objB` have exactly the same properties, regardless of their values.
+
+function similar(objA, objB) {
+
+if (Object.keys(objA).length !== Object.keys(objB).length) {
+return false;
+}
+for (key in objA) {
+if(!(key in objB)){
+return false;
+	}
+}
+return true;
+}
 
 **b)**
 We can interpret objects as _sets_ of properties, and merge those sets in various ways.  Let's define three such merges:
@@ -92,9 +285,44 @@ Using those definitions, implement a function for each:
 
 * `union(objA,objB)`
 
+function union(objA, objB) {
+var newObj = {};
+for (key in objA) {
+  newObj[key] = objA[key];
+    }
+for(key in objB){
+if (!(key in objA)) {
+  newObj[key] = objA[key] || objB[key];
+    }
+	}
+  return newObj;
+}
+
+
 * `intersect(objA,objB)`
 
+function intersect(objA, objB) {
+	var newObj = {};
+	for(var key in objA) {
+	if (key in objB) {
+		newObj[key] = objA[key] && objB[key];
+}
+	}
+  return newObj
+}
+
 * `subtract(objA,objB)`
+
+function subtract(objA, objB) {
+	var newObj = {};
+	for(var key in objA) {
+	if (!(key in objB)) {
+		newObj[key] = objA[key]
+}
+	}
+	return newObj;
+}
+
 
 Each function should return a new object, or _undefined_ if either of their arguments is not an object.
 
@@ -114,9 +342,41 @@ If either person isn't yet represented in `people`, add them.
 Then increment a count of the meetings between them.
 Assume that the order of arguments doesn't matter (i.e. `meet(A,B)` is the same as `meet(B,A)`), and that meeting oneself _(A==B)_ has no effect.
 
+function people.meet(nameA, nameB) {
+if (!(nameA in people.index)){
+people.index[nameA] = {name:nameA, friends:{}};
+}
+if (!(nameB in people.index)) {
+  people.index[nameB] = {name:nameB, friends:{}};
+}
+var objectA = people.index[nameA];
+var objectB = people.index[nameB];
+
+var meeting = objectA.friends[nameB]
+if (meeting === undefined){
+  meeting = 0;
+}
+meeting++
+objectA.friends[nameB] = meeting;
+objectB.friends[nameA] = meeting;
+
+return meeting;
+}
+
 * `people.haveMet(nameA,nameB)` should return a number greater than 0 if those people have met, and some falseish value if they haven't or don't exist.
 
+people.haveMet = function(nameA, nameB) {
+  var meeting = people.index[nameA].friends[nameB];
+    return meeting;
+}
+
 * `people.friendsOf(name)` should return a string listing the names of all people whom `name` has met at least once (or undefined if `name` doesn't exist).   List the names in alphabetical order, and make sure each name appears only once.
+
+people.friendsOf = function(name) {
+  var friends = Object.keys(people.index[name].friends);
+friends = friends.sort().join(', ');
+return friends;  
+}
 
 You may use the enclosed [template file](social-network-template.js) to get started.
 
@@ -139,6 +399,28 @@ Here is the data structure just after the first method call `people.meet('Matt',
 Write another method `people.friendsOfFriendsOf(name)` which returns a string listing, in alphabetical order, all the names of people within two degrees of separation from `name`: they've met either `name` or at least one of `name`'s friends.
 Your list may include `name` itself but no duplicates: any person should be listed only once regardless of the number of connections with `name`.
 
+function union(objA, objB) {
+var newObj = {};
+for (key in objA) {
+  newObj[key] = objA[key];
+    }
+for(key in objB){
+if (!(key in objA)) {
+  newObj[key] = objA[key] || objB[key];
+    }
+	}
+  return newObj;
+}
+
+people.friendsOfFriendsOf = function(name) {
+  var friends1 = Object.keys(people.index[name].friends).sort;
+  var soFar = people.index[name].friends;
+  for (i = 0; i<friends1.length; i++) {
+    var friends2 = people.index[friends1[i]].friends;
+    var soFar = union(soFar, friends2);
+  }
+  return Object.keys(soFar).sort().join(', ');
+}
+
+
 (_Hint:_ the union of sets includes no duplicates!  Perhaps you could recycle code from somewhere?)
-
-
